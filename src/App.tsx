@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import {
   ArrowRight,
-  ArrowUpRight,
   Menu,
   X,
   Check,
@@ -16,50 +15,11 @@ import {
 import Logo from './components/Logo';
 import { supabase, type Inquiry, type Subscriber } from './lib/supabase';
 
-const taglines = [
-  {
-    brand: 'KFC',
-    line: 'No time for lunch at work? Bring work to lunch.',
-    insight:
-      'Kenyans skip lunch not because they want to, but because the day won’t wait. This line reframes KFC from a meal choice into a workaround for the busy professional — turning a constraint into a craving.',
-    tone: 'Playful, urban, fast-paced',
-  },
-  {
-    brand: 'Fargo',
-    line: 'Go far with Fargo.',
-    insight:
-      'For a logistics company, distance is the entire value proposition. This line positions Fargo as a growth partner for Kenyan SMEs and e-commerce operators who need to reach beyond their neighborhood.',
-    tone: 'Confident, expansive, reliable',
-  },
-  {
-    brand: 'Supa Loaf',
-    line: 'Supa Life.',
-    insight:
-      'Bread is daily. Life is daily. Collapsing the two makes Supa Loaf inseparable from the rhythm of an ordinary Kenyan morning. Two words, one identity.',
-    tone: 'Warm, everyday, essential',
-  },
-  {
-    brand: 'Festive Bread',
-    line: 'Every day is festive.',
-    insight:
-      'Festive’s name implies occasion. This line democratizes the feeling — you don’t need a holiday to deserve good bread. It reframes an everyday purchase as a small celebration.',
-    tone: 'Joyful, inclusive, uplifting',
-  },
-  {
-    brand: 'Umoja Shoes',
-    line: 'Umoja ni Mimi na Wewe, Umoja ni Nguvu.',
-    insight:
-      'Unity is me and you. Unity is strength. In Swahili, this line carries the weight of a proverb and the rhythm of a march. It makes every pair of shoes a statement about standing together.',
-    tone: 'Bold, cultural, unifying',
-  },
-];
-
 const services = [
   {
     name: 'Brand Audit & Positioning Workshop',
     tier: 'Tier 01',
     icon: Compass,
-    price: 'KSh 85,000 \u2013 120,000',
     description:
       'A half-day session with your founding team. We diagnose where your brand stands today, name the gaps, and deliver a written brief with a recommended direction.',
     deliverables: ['Brand audit report', 'Positioning statement', 'Recommended direction', 'Written creative brief'],
@@ -69,7 +29,6 @@ const services = [
     name: 'Full Brand Identity Build',
     tier: 'Tier 02',
     icon: Layers,
-    price: 'KSh 600,000 \u2013 1,200,000',
     description:
       'Strategy, visual identity, and voice. Logo, colour, type, brand guidelines, messaging pillars, and templates for social and stationery. The core product.',
     deliverables: ['Brand strategy', 'Logo & visual system', 'Brand guidelines book', 'Voice & messaging framework', 'Social & stationery templates'],
@@ -80,9 +39,8 @@ const services = [
     name: 'Brand Partnership',
     tier: 'Tier 03',
     icon: Sparkles,
-    price: 'KSh 80,000 \u2013 150,000 / month',
     description:
-      'Ongoing monthly retainer. I function as your fractional brand director \u2014 attending campaign reviews, approving creative, and running quarterly strategy sessions.',
+      'Ongoing monthly retainer. We function as your fractional brand director attending campaign reviews, approving creative, and running quarterly strategy sessions.',
     deliverables: ['Monthly creative reviews', 'Quarterly strategy sessions', 'Campaign approval & guidance', 'Ongoing brand consulting'],
     footnote: 'Minimum three-month commitment.',
   },
@@ -112,7 +70,6 @@ const steps = [
 ];
 
 const navLinks = [
-  { label: 'Work', href: '#work' },
   { label: 'Services', href: '#services' },
   { label: 'Process', href: '#process' },
   { label: 'BUNI', href: '#buni' },
@@ -141,7 +98,6 @@ function useReveal() {
 export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [activeTagline, setActiveTagline] = useState(0);
   const [formStatus, setFormStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
   const [subStatus, setSubStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
   const heroRef = useRef<HTMLDivElement>(null);
@@ -152,13 +108,6 @@ export default function App() {
     const onScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
-  }, []);
-
-  useEffect(() => {
-    const id = setInterval(() => {
-      setActiveTagline((prev) => (prev + 1) % taglines.length);
-    }, 5000);
-    return () => clearInterval(id);
   }, []);
 
   const handleInquiry = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -269,7 +218,7 @@ export default function App() {
           <div className="lg:col-span-7">
             <div className="inline-flex items-center gap-2 bg-ink/5 border border-ink/10 rounded-full px-4 py-1.5 text-sm font-medium text-inksoft mb-8 animate-fade-in">
               <span className="w-2 h-2 rounded-full bg-terracotta animate-pulse" />
-              Brand & visual identity consultancy \u2014 Nairobi
+              Brand & visual identity
             </div>
             <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-medium leading-[1.02] tracking-tight text-balance">
               We help growing brands{' '}
@@ -332,99 +281,6 @@ export default function App() {
         </div>
       </section>
 
-      {/* MARQUEE */}
-      <div className="border-y border-ink/10 bg-cream py-5 overflow-hidden">
-        <div className="flex gap-12 animate-[float_30s_linear_infinite] whitespace-nowrap">
-          {[...Array(3)].map((_, i) => (
-            <div key={i} className="flex gap-12 items-center shrink-0">
-              {['KFC', 'Fargo', 'Supa Loaf', 'Festive Bread', 'Umoja Shoes', 'Equity Bank', 'Safaricom', 'EABL'].map((b) => (
-                <span key={b} className="font-display text-2xl font-medium text-ink/40">{b}</span>
-              ))}
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* WORK / SPEC TAGLINES */}
-      <section id="work" className="py-24 lg:py-32">
-        <div className="max-w-7xl mx-auto px-6 lg:px-10">
-          <div className="reveal max-w-3xl mb-16">
-            <p className="text-sm font-semibold text-terracotta uppercase tracking-widest mb-4">Speculative work</p>
-            <h2 className="font-display text-4xl lg:text-5xl font-medium leading-tight tracking-tight">
-              Unsolicited brand work for real Kenyan companies.
-            </h2>
-            <p className="mt-6 text-lg text-inksoft leading-relaxed">
-              Nobody hired us to write these. We wrote them to prove the thinking against real briefs. Each tagline is paired with the strategic insight behind it \u2014 because a clever line without reasoning is just a lucky guess.
-            </p>
-          </div>
-
-          <div className="grid lg:grid-cols-12 gap-8">
-            {/* Tagline selector */}
-            <div className="lg:col-span-5 space-y-3">
-              {taglines.map((t, i) => (
-                <button
-                  key={t.brand}
-                  onClick={() => setActiveTagline(i)}
-                  className={`w-full text-left p-6 rounded-2xl border transition-all ${
-                    activeTagline === i
-                      ? 'border-terracotta bg-cream shadow-md'
-                      : 'border-ink/10 bg-paper hover:border-ink/30'
-                  }`}
-                >
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="font-display text-xl font-medium">{t.brand}</span>
-                    <ArrowUpRight
-                      className={`w-5 h-5 transition-all ${
-                        activeTagline === i ? 'text-terracotta' : 'text-ink/30'
-                      }`}
-                    />
-                  </div>
-                  <p className={`font-display text-lg italic ${activeTagline === i ? 'text-ink' : 'text-ink/50'}`}>
-                    {t.line}
-                  </p>
-                </button>
-              ))}
-            </div>
-
-            {/* Detail panel */}
-            <div className="lg:col-span-7 lg:sticky lg:top-24 self-start">
-              <div className="bg-ink text-cream rounded-3xl p-10 lg:p-14 min-h-[480px] flex flex-col justify-between">
-                <div>
-                  <span className="text-terracotta-light text-sm font-semibold uppercase tracking-widest">
-                    {taglines[activeTagline].brand}
-                  </span>
-                  <h3 className="mt-6 font-display text-3xl lg:text-4xl font-medium leading-tight italic">
-                    {taglines[activeTagline].line}
-                  </h3>
-                </div>
-                <div className="mt-10 space-y-6">
-                  <div>
-                    <p className="text-cream/50 text-xs font-semibold uppercase tracking-widest mb-2">The insight</p>
-                    <p className="text-cream/80 text-base lg:text-lg leading-relaxed">
-                      {taglines[activeTagline].insight}
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-cream/50 text-xs font-semibold uppercase tracking-widest mb-2">Tone</p>
-                    <p className="text-cream/80 text-base">{taglines[activeTagline].tone}</p>
-                  </div>
-                </div>
-                <div className="mt-10 flex items-center gap-3">
-                  {taglines.map((_, i) => (
-                    <div
-                      key={i}
-                      className={`h-1 rounded-full transition-all ${
-                        activeTagline === i ? 'w-8 bg-terracotta' : 'w-4 bg-cream/20'
-                      }`}
-                    />
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* SERVICES */}
       <section id="services" className="py-24 lg:py-32 bg-cream border-y border-ink/10">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
@@ -434,7 +290,7 @@ export default function App() {
               Three tiers. Project-priced, never hourly.
             </h2>
             <p className="mt-6 text-lg text-inksoft leading-relaxed">
-              Hourly billing punishes you for being efficient. We sell outcomes, not time. Each tier is designed so clients self-select — and so there’s always somewhere to grow into.
+              We sell outcomes, not time. Each tier is designed so clients self-select — and so there’s always somewhere to grow into.
             </p>
           </div>
 
@@ -476,9 +332,6 @@ export default function App() {
                     ))}
                   </ul>
                   <div className="mt-auto">
-                    <p className={`font-display text-xl font-medium mb-1 ${s.featured ? 'text-cream' : 'text-ink'}`}>
-                      {s.price}
-                    </p>
                     <p className={`text-xs ${s.featured ? 'text-cream/50' : 'text-ink/40'}`}>{s.footnote}</p>
                   </div>
                 </div>
@@ -511,9 +364,9 @@ export default function App() {
           <div className="reveal mt-12 bg-ink text-cream rounded-3xl p-10 lg:p-16 text-center">
             <Quote className="w-10 h-10 text-terracotta-light mx-auto mb-6" />
             <p className="font-display text-2xl lg:text-3xl font-medium italic leading-tight max-w-3xl mx-auto">
-              The companies that get rebrands right don\u2019t launch a new identity. They reveal one.
+              The companies that get rebrands right don't launch a new identity. They reveal one.
             </p>
-            <p className="mt-6 text-cream/50 text-sm">From BUNI Issue 01 \u2014 Why most rebrands fail before they launch</p>
+            <p className="mt-6 text-cream/50 text-sm">From BUNI Issue 01 Why most rebrands fail before they launch</p>
           </div>
         </div>
       </section>
@@ -577,7 +430,7 @@ export default function App() {
                   {subStatus === 'error' && (
                     <p className="text-sm text-terracotta-dark">Something went wrong. Try again.</p>
                   )}
-                  <p className="text-xs text-ink/40">Biweekly. No spam. Unsubscribe anytime.</p>
+                  <p className="text-xs text-ink/40">Bimonthly. No spam. Unsubscribe anytime.</p>
                 </form>
               )}
             </div>
@@ -594,7 +447,7 @@ export default function App() {
               Let’s find your voice.
             </h2>
             <p className="mt-6 text-lg text-inksoft leading-relaxed max-w-md">
-              Tell me about your company and what you’re trying to build. I read every message and respond within two business days.
+              Tell us about your company and what you’re trying to build. We read every message and respond within two business days.
             </p>
             <div className="mt-12 space-y-6">
               <div className="flex items-start gap-4">
@@ -603,7 +456,7 @@ export default function App() {
                 </div>
                 <div>
                   <p className="text-sm text-ink/50">Email</p>
-                  <p className="font-medium">hello@savai.co</p>
+                  <p className="font-medium">sales@savai.co.ke</p>
                 </div>
               </div>
               <div className="flex items-start gap-4">
@@ -626,7 +479,7 @@ export default function App() {
                 </div>
                 <h3 className="font-display text-2xl font-medium mb-3">Message received.</h3>
                 <p className="text-cream/70 max-w-sm">
-                  Thank you. I’ll be in touch within two business days. In the meantime, subscribe to BUNI for a taste of how I think.
+                  Thank you. We’ll be in touch within two business days. In the meantime, subscribe to BUNI for a taste of how We think.
                 </p>
               </div>
             ) : (
@@ -725,7 +578,7 @@ export default function App() {
             <div>
               <p className="text-cream/40 text-xs font-semibold uppercase tracking-widest mb-4">Connect</p>
               <ul className="space-y-2.5">
-                <li><a href="mailto:hello@savai.co" className="text-cream/70 hover:text-terracotta-light transition-colors text-sm">hello@savai.co</a></li>
+                <li><a href="mailto:sale@savai.co.ke" className="text-cream/70 hover:text-terracotta-light transition-colors text-sm">hello@savai.co</a></li>
                 <li><span className="text-cream/70 text-sm">Nairobi, Kenya</span></li>
                 <li><a href="#buni" className="text-cream/70 hover:text-terracotta-light transition-colors text-sm">Subscribe to BUNI</a></li>
               </ul>
@@ -733,7 +586,6 @@ export default function App() {
           </div>
           <div className="border-t border-cream/10 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
             <p className="text-cream/40 text-sm">Savai Creative. {new Date().getFullYear()}. Originate.</p>
-            <p className="font-display text-sm italic text-cream/50">The companies that get rebrands right don’t launch a new identity. They reveal one.</p>
           </div>
         </div>
       </footer>
