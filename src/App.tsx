@@ -116,18 +116,32 @@ export default function App() {
     const form = e.currentTarget;
     const data = new FormData(form);
     const payload: Inquiry = {
-      name: String(data.get('name') || ''),
-      email: String(data.get('email') || ''),
-      company: String(data.get('company') || ''),
-      service: String(data.get('service') || ''),
-      message: String(data.get('message') || ''),
+      name: String(data.get('name') || '').trim(),
+      email: String(data.get('email') || '').trim(),
+      company: String(data.get('company') || '').trim(),
+      service: String(data.get('service') || '').trim(),
+      message: String(data.get('message') || '').trim(),
     };
-    const { error } = await supabase.from('inquiries').insert(payload);
-    if (error) {
-      setFormStatus('error');
-    } else {
+
+    try {
+      const { data: emailData, error: emailError } = await supabase.functions.invoke('send-inquiry-email', {
+        body: payload,
+      });
+
+      if (emailError || !emailData?.success) {
+        throw emailError || new Error('Unable to send enquiry email.');
+      }
+
+      const { error } = await supabase.from('inquiries').insert(payload);
+      if (error) {
+        throw error;
+      }
+
       setFormStatus('sent');
       form.reset();
+    } catch (error) {
+      console.error('Inquiry submission failed:', error);
+      setFormStatus('error');
     }
   };
 
@@ -578,7 +592,7 @@ export default function App() {
             <div>
               <p className="text-cream/40 text-xs font-semibold uppercase tracking-widest mb-4">Connect</p>
               <ul className="space-y-2.5">
-                <li><a href="mailto:sale@savai.co.ke" className="text-cream/70 hover:text-terracotta-light transition-colors text-sm">hello@savai.co</a></li>
+                <li><a href="mailto:sales@savai.co.ke" className="text-cream/70 hover:text-terracotta-light transition-colors text-sm">sales@savai.co.ke</a></li>
                 <li><span className="text-cream/70 text-sm">Nairobi, Kenya</span></li>
                 <li><a href="#buni" className="text-cream/70 hover:text-terracotta-light transition-colors text-sm">Subscribe to BUNI</a></li>
               </ul>
