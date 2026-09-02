@@ -235,9 +235,7 @@ export default function App() {
               Brand & visual identity
             </div>
             <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-medium leading-[1.02] tracking-tight text-balance">
-              We help growing brands{' '}
-              <span className="italic text-terracotta">find their voice</span>{' '}
-              before they can afford a full agency.
+              We know your story,Do you?
             </h1>
             <p className="mt-8 text-lg lg:text-xl text-inksoft max-w-xl leading-relaxed">
               Savai Creative is a brand strategy and visual identity consultancy based in Nairobi. We work with founders, funded startups, and mid-size companies that need to sound and feel bigger than they are.
