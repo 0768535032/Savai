@@ -1,5 +1,12 @@
 import { useEffect, useState } from 'react';
 import { supabase } from './lib/supabase';
+import type { SupabaseClient } from '@supabase/supabase-js';
+
+declare global {
+  interface Window {
+    savaiSupabase?: SupabaseClient | null;
+  }
+}
 
 const scriptPaths = Array.from({ length: 8 }, (_, index) => `/legacy/js/${String(index + 1).padStart(2, '0')}.js`);
 
@@ -8,6 +15,7 @@ export default function LegacySite() {
 
   useEffect(() => {
     let cancelled = false;
+    window.savaiSupabase = supabase;
 
     const onContactSubmit = async (event: SubmitEvent) => {
       const form = event.target;
@@ -97,6 +105,7 @@ export default function LegacySite() {
     return () => {
       cancelled = true;
       document.removeEventListener('submit', onContactSubmit, true);
+      delete window.savaiSupabase;
     };
   }, []);
 

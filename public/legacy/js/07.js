@@ -21,9 +21,10 @@
             <div style="flex:1; font:400 10px Poppins,sans-serif; opacity:0.5; display:flex; align-items:center;">Draw your signature, not typed.</div>
           </div>
 
-          <input id="sig-name" class="sig-input" placeholder="Your name — e.g., Wanjiku Mwangi" />
-          <input id="sig-cred" class="sig-input" placeholder="Role & Business — e.g., Founder @ Zuri Organics" />
-          <textarea id="sig-impact" class="sig-input" rows="3" placeholder="How Savai impacted your business — e.g., 'Positioning went from vague to unforgettable. We doubled inquiries in 3 weeks.'"></textarea>
+          <input id="sig-name" class="sig-input" placeholder="Your name — e.g., Wanjiku Mwangi" maxlength="120" required />
+          <input id="sig-cred" class="sig-input" placeholder="Role & Business — e.g., Founder @ Zuri Organics" maxlength="160" required />
+          <textarea id="sig-impact" class="sig-input" rows="3" maxlength="1000" placeholder="How Savai impacted your business — e.g., 'Positioning went from vague to unforgettable. We doubled inquiries in 3 weeks.'" required></textarea>
+          <label style="display:flex; gap:9px; align-items:flex-start; margin-top:12px; font:400 12px/1.5 Poppins,sans-serif; color:#555;"><input id="sig-consent" type="checkbox" required style="margin-top:3px;">I agree that my name, role, testimonial and signature may be displayed publicly if approved.</label>
           
           <button id="save-sig" style="margin-top:14px; width:100%; background:#0a0a0a; color:#fff; border:0; padding:14px; font:700 12px Syne,sans-serif; letter-spacing:0.16em; cursor:pointer; border-radius:0;">LEAVE SIGNATURE + TESTIMONIAL →</button>
           <div id="sig-status" style="font:500 11px Syne,sans-serif; margin-top:8px; min-height:16px;"></div>
@@ -31,7 +32,7 @@
         <div id="sig-right">
           <div style="display:flex; justify-content:space-between; align-items:center;">
             <span style="font:700 11px Syne,sans-serif; letter-spacing:0.2em;">WALL • <span id="sig-count">0</span> MARKS</span>
-            <button id="sig-export" style="font:500 9px Syne,sans-serif; border:1px solid #0a0a0a; background:transparent; padding:4px 8px; cursor:pointer;">EXPORT</button>
+            <button id="sig-refresh" type="button" style="font:500 9px Syne,sans-serif; border:1px solid #0a0a0a; background:transparent; padding:4px 8px; cursor:pointer;">REFRESH</button>
           </div>
           <div id="sig-feed"></div>
         </div>
@@ -94,101 +95,164 @@
     const nameI=document.getElementById('sig-name');
     const credI=document.getElementById('sig-cred');
     const impactI=document.getElementById('sig-impact');
+    const consentI=document.getElementById('sig-consent');
     const status=document.getElementById('sig-status');
     const feed=document.getElementById('sig-feed');
     const count=document.getElementById('sig-count');
     const clearBtn=document.getElementById('clear-sig');
     const saveBtn=document.getElementById('save-sig');
-    
-    function getData(){
-      try{ return JSON.parse(localStorage.getItem('savai_testimonials')||'[]'); }catch{ return []; }
+
+    const client=window.savaiSupabase;
+    const bucket='studio-signatures';
+    function setStatus(message,isError=false){
+      status.textContent=message;
+      status.style.color=isError?'#c0563a':'#0a7a3a';
     }
-    function setData(arr){ localStorage.setItem('savai_testimonials', JSON.stringify(arr)); }
-    
-    function render(){
-      const data=getData();
-      count.textContent=data.length;
+
+    async function render(){
       feed.innerHTML='';
-      if(data.length===0){
-        feed.innerHTML=`<div class="sig-empty">No marks yet. Be the first to sign — it shows future clients this studio is active and trusted.</div>`;
+      if(!client){
+        count.textContent='—';
+        feed.textContent='The signature wall is not connected right now. Please try again later.';
+        setStatus('Signature submissions are temporarily unavailable.',true);
         return;
       }
-      data.slice().reverse().forEach((d,i)=>{
-        const card=document.createElement('div');
-        card.className='sig-card';
-        card.style.setProperty('--r', ((i%5)-2)*1.2+'deg');
-        card.innerHTML=`
-          <img class="sig" src="${d.sig}" alt="signature" />
-          <div class="quote">"${(d.impact||'').replace(/</g,'&lt;')}"</div>
-          <div class="meta">${(d.name||'Anonymous').replace(/</g,'&lt;')}</div>
-          <div class="cred">${(d.cred||'').replace(/</g,'&lt;')} • ${new Date(d.date).toLocaleDateString()}</div>
-        `;
-        feed.appendChild(card);
-      });
+
+      feed.textContent='Loading approved signatures…';
+      try{
+        const {data,error}=await client
+          .from('studio_testimonials')
+          .select('id,name,role,impact,signature_path,status,created_at')
+          .eq('status','approved')
+          .order('created_at',{ascending:false})
+          .limit(30);
+        if(error) throw error;
+
+        let signedUrls=[];
+        if(data.length){
+          const {data:signedData,error:signedError}=await client.storage.from(bucket).createSignedUrls(data.map(item=>item.signature_path),3600);
+          if(signedError) throw signedError;
+          if(!signedData||signedData.length!==data.length||signedData.some(item=>item.error||!item.signedUrl)){
+            throw new Error('One or more approved signature images could not be signed.');
+          }
+          signedUrls=signedData;
+        }
+
+        count.textContent=String(data.length);
+        if(!data.length){
+          feed.innerHTML='<div class="sig-empty">No approved signatures yet. Leave your mark to be considered for the wall.</div>';
+          return;
+        }
+        data.forEach((entry,index)=>{
+          const card=document.createElement('div');
+          card.className='sig-card';
+          card.style.setProperty('--r', ((index%5)-2)*1.2+'deg');
+          const image=document.createElement('img');
+          image.className='sig';
+          image.src=signedUrls[index].signedUrl;
+          image.alt='Signature from '+entry.name;
+          const quote=document.createElement('div');
+          quote.className='quote';
+          quote.textContent='"'+entry.impact+'"';
+          const name=document.createElement('div');
+          name.className='meta';
+          name.textContent=entry.name;
+          const role=document.createElement('div');
+          role.className='cred';
+          role.textContent=entry.role+' • '+new Date(entry.created_at).toLocaleDateString();
+          card.append(image,quote,name,role);
+          feed.appendChild(card);
+        });
+      }catch(error){
+        console.error('Unable to load approved studio testimonials.',error);
+        count.textContent='—';
+        feed.textContent='The signature wall is unavailable right now. Please try again later.';
+      }
     }
-    
+
     clearBtn.onclick=()=>{
       const rect=wrap.getBoundingClientRect();
       ctx.clearRect(0,0,rect.width,rect.height);
-      // redraw background grid via css already
     };
-    
-    saveBtn.onclick=()=>{
-      const rect=wrap.getBoundingClientRect();
-      // check if canvas has ink by checking dataURL length and pixel check
-      const blank=canvas.toDataURL();
-      const tmp=document.createElement('canvas'); tmp.width=canvas.width; tmp.height=canvas.height;
-      // quick ink check: sample alpha
-      const imgData=ctx.getImageData(0,0, Math.min(300, rect.width), Math.min(200, rect.height));
-      let ink=0; for(let i=3;i<imgData.data.length;i+=4){ if(imgData.data[i]>0 || imgData.data[i-1]>0) ink++; if(ink>20) break; }
-      // Actually signature draws black so check non-white
-      // Simpler: data URL size - blank canvas is ~2k, drawn is >8k
-      if(blank.length < 6000){
-        status.textContent='Please draw your signature first.';
-        status.style.color='#c0563a';
+
+    document.getElementById('sig-refresh').onclick=()=>{void render();};
+
+    function canvasBlob(){
+      return new Promise((resolve,reject)=>{
+        canvas.toBlob(blob=>{
+          if(blob) resolve(blob);
+          else reject(new Error('The signature image could not be created.'));
+        },'image/png');
+      });
+    }
+
+    saveBtn.onclick=async()=>{
+      if(!client){
+        setStatus('Signature submissions are temporarily unavailable. Please try again later.',true);
         return;
       }
-      if(!nameI.value.trim() || !credI.value.trim()){
-        status.textContent='Add your name and role to build trust.';
-        status.style.color='#c0563a';
+      const hasInk=ctx.getImageData(0,0,canvas.width,canvas.height).data.some((value,index)=>index%4===3&&value>0);
+      if(!hasInk){
+        setStatus('Please draw your signature first.',true);
         return;
       }
-      if(!impactI.value.trim() || impactI.value.trim().length<10){
-        status.textContent='Add how Savai impacted your business (min 10 chars).';
-        status.style.color='#c0563a';
+      const name=nameI.value.trim();
+      const role=credI.value.trim();
+      const impact=impactI.value.trim();
+      if(!name||name.length>120||!role||role.length>160){
+        setStatus('Add a name (up to 120 characters) and role or business (up to 160 characters).',true);
         return;
       }
-      
-      const entry={
-        id: Date.now(),
-        name: nameI.value.trim(),
-        cred: credI.value.trim(),
-        impact: impactI.value.trim(),
-        sig: blank,
-        date: new Date().toISOString()
-      };
-      const arr=getData();
-      arr.push(entry);
-      setData(arr);
-      render();
-      // clear
-      ctx.clearRect(0,0,rect.width,rect.height);
-      nameI.value=''; credI.value=''; impactI.value='';
-      status.textContent='✓ Added to wall — thank you for trusting Savai.';
-      status.style.color='#0a7a3a';
-      saveBtn.textContent='ADDED ✓';
-      setTimeout(()=>{ saveBtn.textContent='LEAVE SIGNATURE + TESTIMONIAL →'; status.textContent=''; }, 2000);
+      if(impact.length<10||impact.length>1000){
+        setStatus('Tell us how Savai impacted your business (10–1,000 characters).',true);
+        return;
+      }
+      if(!consentI.checked){
+        setStatus('Please agree to the public display terms before submitting.',true);
+        return;
+      }
+
+      saveBtn.disabled=true;
+      saveBtn.textContent='SUBMITTING…';
+      setStatus('Submitting your signature for review…');
+      try{
+        const blob=await canvasBlob();
+        if(blob.size>262144){
+          throw new Error('The signature image is too large. Please clear it and draw a simpler signature.');
+        }
+        const id=crypto.randomUUID();
+        const signaturePath=id+'.png';
+        const {error:uploadError}=await client.storage.from(bucket).upload(signaturePath,blob,{contentType:'image/png',upsert:false});
+        if(uploadError) throw uploadError;
+        const {error:insertError}=await client.from('studio_testimonials').insert({
+          id,
+          name,
+          role,
+          impact,
+          signature_path:signaturePath,
+          status:'pending'
+        });
+        if(insertError) throw insertError;
+
+        const rect=wrap.getBoundingClientRect();
+        ctx.clearRect(0,0,rect.width,rect.height);
+        nameI.value='';
+        credI.value='';
+        impactI.value='';
+        consentI.checked=false;
+        setStatus('Thank you. Your signature was submitted and will appear on the wall if approved.');
+      }catch(error){
+        console.error('Unable to submit studio testimonial.',error);
+        setStatus(error instanceof Error&&error.message.includes('too large')
+          ?error.message
+          :'We could not submit your signature. Please try again later.',true);
+      }finally{
+        saveBtn.disabled=false;
+        saveBtn.textContent='LEAVE SIGNATURE + TESTIMONIAL →';
+      }
     };
-    
-    document.getElementById('sig-export').onclick=()=>{
-      const data=getData();
-      const blob=new Blob([JSON.stringify(data,null,2)], {type:'application/json'});
-      const url=URL.createObjectURL(blob);
-      const a=document.createElement('a'); a.href=url; a.download='savai-testimonials.json'; a.click();
-    };
-    
-    render();
-    console.log('testimonial wall built');
+
+    void render();
   }
   
   setTimeout(buildWall, 700);

@@ -131,7 +131,7 @@
             <canvas id="sig-canvas" width="1200" height="500" style="width:100%; height:420px; display:block; cursor:crosshair; background-image:repeating-linear-gradient(0deg, transparent 0 31px, #00000008 31px 32px), url('/legacy/assets/a7a08ca3027f82a8.jpg'); background-size:auto, 80px; background-blend-mode:normal, multiply; opacity:1;"></canvas>
             <div id="sig-feed" style="position:absolute; inset:0; pointer-events:auto; overflow:hidden;"></div>
           </div>
-          <p style="margin-top:12px; font:400 12px Poppins; color:#888;">Signatures are saved locally — refresh to see the wall grow. (No data leaves your browser)</p>
+          <p style="margin-top:12px; font:400 12px Poppins; color:#888;">Signatures are stored securely and only appear on the public wall after review.</p>
         </div>
       </section>`;
       studioSection.insertAdjacentHTML('afterend', sigHTML);
