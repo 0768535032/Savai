@@ -17,7 +17,21 @@ export default function Perspective() {
       >
         <Skyline />
         <div className="wrap persp-top" style={{ position: 'relative' }}>
-          <h1>Your brand is a heartbeat, and currently it's flatlining.</h1>
+          <h1>Design is Nairobi's heartbeat.</h1>
+          <div className="persp-copy">
+            <p>
+              Every matatu wrapped in colour. Every kiosk with a hand-painted sign. Every startup with a pitch deck but
+              no positioning. The city is full of brands trying to be seen — and running out of words to say why they
+              matter.
+            </p>
+            <p>Savai is for the ones who are ready to say something.</p>
+            <p>
+              We are a brand language lab working with emerging leaders and category challengers who have the product
+              conviction but not yet the positioning to match it. We find the ownable sentence. We build the campaign
+              around it. We make the launch articulate.
+            </p>
+            <p className="persp-signoff">Not the other way around.</p>
+          </div>
           <div className="pulse-wrap">
             <PulseLine />
           </div>
