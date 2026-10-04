@@ -10,24 +10,24 @@
         <div id="sig-left">
           <div style="display:inline-block; background:#0a0a0a; color:#fff; padding:5px 10px; border-radius:999px; font:500 9px Syne,sans-serif; letter-spacing:0.18em;">LIVE TESTIMONIAL WALL</div>
           <h3 style="font:700 28px Syne,sans-serif; line-height:1.05; margin:14px 0 8px; letter-spacing:-0.02em;">Leave your mark.</h3>
-          <p style="font:400 13px Poppins,sans-serif; opacity:0.7; line-height:1.5;">Your signature shows this site is alive and trusted. Add your name, role, and how Savai shifted your business.</p>
+          <p style="font:400 13px Poppins,sans-serif; opacity:0.7; line-height:1.5;">Share your name, role and how Savai helped. We review each submission before it appears on the public wall.</p>
           
           <div id="sig-canvas-wrap">
-            <canvas id="sig-canvas"></canvas>
+            <canvas id="sig-canvas" role="img" aria-label="Draw your signature here"></canvas>
             <div style="position:absolute; bottom:6px; right:8px; font:500 8px Syne,sans-serif; letter-spacing:0.15em; opacity:0.4; pointer-events:none;">DRAW ABOVE</div>
           </div>
           <div style="display:flex; gap:8px; margin-top:10px;">
-            <button id="clear-sig" style="flex:0; border:1.5px solid #0a0a0a; background:#fff; padding:8px 14px; font:600 11px Syne,sans-serif; cursor:pointer;">CLEAR</button>
+            <button id="clear-sig" type="button" style="flex:0; border:1.5px solid #0a0a0a; background:#fff; padding:8px 14px; font:600 11px Syne,sans-serif; cursor:pointer;">CLEAR</button>
             <div style="flex:1; font:400 10px Poppins,sans-serif; opacity:0.5; display:flex; align-items:center;">Draw your signature, not typed.</div>
           </div>
 
-          <input id="sig-name" class="sig-input" placeholder="Your name — e.g., Wanjiku Mwangi" maxlength="120" required />
-          <input id="sig-cred" class="sig-input" placeholder="Role & Business — e.g., Founder @ Zuri Organics" maxlength="160" required />
-          <textarea id="sig-impact" class="sig-input" rows="3" maxlength="1000" placeholder="How Savai impacted your business — e.g., 'Positioning went from vague to unforgettable. We doubled inquiries in 3 weeks.'" required></textarea>
+          <input id="sig-name" class="sig-input" aria-label="Your name" autocomplete="name" placeholder="Your name — e.g., Wanjiku Mwangi" maxlength="120" required />
+          <input id="sig-cred" class="sig-input" aria-label="Role and business" autocomplete="organization-title" placeholder="Role & Business — e.g., Founder @ Zuri Organics" maxlength="160" required />
+          <textarea id="sig-impact" class="sig-input" aria-label="How Savai impacted your business" rows="3" maxlength="1000" placeholder="How Savai impacted your business — e.g., 'Positioning went from vague to unforgettable. We doubled inquiries in 3 weeks.'" required></textarea>
           <label style="display:flex; gap:9px; align-items:flex-start; margin-top:12px; font:400 12px/1.5 Poppins,sans-serif; color:#555;"><input id="sig-consent" type="checkbox" required style="margin-top:3px;">I agree that my name, role, testimonial and signature may be displayed publicly if approved.</label>
           
-          <button id="save-sig" style="margin-top:14px; width:100%; background:#0a0a0a; color:#fff; border:0; padding:14px; font:700 12px Syne,sans-serif; letter-spacing:0.16em; cursor:pointer; border-radius:0;">LEAVE SIGNATURE + TESTIMONIAL →</button>
-          <div id="sig-status" style="font:500 11px Syne,sans-serif; margin-top:8px; min-height:16px;"></div>
+          <button id="save-sig" type="button" style="margin-top:14px; width:100%; background:#0a0a0a; color:#fff; border:0; padding:14px; font:700 12px Syne,sans-serif; letter-spacing:0.16em; cursor:pointer; border-radius:0;">LEAVE SIGNATURE + TESTIMONIAL →</button>
+          <div id="sig-status" role="status" aria-live="polite" style="font:500 11px Syne,sans-serif; margin-top:8px; min-height:16px;"></div>
         </div>
         <div id="sig-right">
           <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -51,13 +51,16 @@
       const w=Math.round(rect.width*dpr);
       const h=Math.round(rect.height*dpr);
       if(canvas.width!==w || canvas.height!==h){
-        const prev=ctx.getImageData(0,0,canvas.width,canvas.height);
+        const previous=document.createElement('canvas');
+        previous.width=canvas.width;
+        previous.height=canvas.height;
+        previous.getContext('2d').drawImage(canvas,0,0);
         canvas.width=w; canvas.height=h;
         canvas.style.width=rect.width+'px';
         canvas.style.height=rect.height+'px';
         ctx.setTransform(dpr,0,0,dpr,0,0);
         ctx.lineCap='round'; ctx.lineJoin='round'; ctx.strokeStyle='#0a0a0a'; ctx.lineWidth=2.6;
-        // restore if needed (rough)
+        ctx.drawImage(previous,0,0,previous.width,previous.height,0,0,rect.width,rect.height);
       } else {
         ctx.setTransform(dpr,0,0,dpr,0,0);
         ctx.lineCap='round'; ctx.lineJoin='round'; ctx.strokeStyle='#0a0a0a'; ctx.lineWidth=2.6;

@@ -552,15 +552,16 @@ html[data-theme="light"] #theme-indicator .dot{
 
 
 #signature-wall{position:relative; min-height:620px; background:#f8f5f0; border:1.5px solid #0a0a0a; overflow:hidden; padding:0;}
-#sig-top{display:flex; gap:0; flex-wrap:wrap;}
-#sig-left{flex:1 1 380px; background:#fff; border-right:1.5px solid #0a0a0a; padding:28px; min-height:560px;}
-#sig-right{flex:1.2 1 420px; background:#f8f5f0; padding:28px; position:relative; overflow:auto; max-height:700px;}
+#sig-top{display:flex; gap:0; flex-wrap:wrap;min-width:0;}
+#sig-left{flex:1 1 380px;min-width:0;background:#fff; border-right:1.5px solid #0a0a0a; padding:28px; min-height:560px;}
+#sig-right{flex:1.2 1 420px;min-width:0;background:#f8f5f0; padding:28px; position:relative; overflow:auto; max-height:700px;}
 #sig-canvas-wrap{position:relative; background:#fff; border:1.5px dashed #0a0a0a; height:220px; cursor:crosshair; margin-top:12px;}
 #sig-canvas{width:100%; height:100%; display:block; touch-action:none; background:repeating-linear-gradient(0deg, transparent, transparent 23px, rgba(0,0,0,0.04) 24px), #fff;}
 .sig-input{width:100%; border:1.5px solid #0a0a0a; padding:10px 12px; font:500 14px Poppins,sans-serif; margin-top:10px; background:#fff;}
 .sig-input:focus{outline:none; border-color:#c0563a;}
 #sig-feed{display:grid; grid-template-columns:1fr; gap:14px; margin-top:12px;}
 .sig-card{background:#fff; border:1.5px solid #0a0a0a; padding:14px; position:relative; box-shadow:4px 4px 0 #0a0a0a; transform:rotate(var(--r,0deg));}
+.sig-card>*{overflow-wrap:anywhere}
 .sig-card img.sig{width:100%; max-height:90px; object-fit:contain; filter:contrast(1.2); margin-bottom:10px; background:#fff;}
 .sig-card .quote{font:400 13px/1.4 'Instrument Serif', serif; font-style:italic; color:#111; margin-bottom:8px;}
 .sig-card .meta{font:600 11px Syne,sans-serif; letter-spacing:0.08em; text-transform:uppercase;}
@@ -579,6 +580,10 @@ html[data-theme="light"] .tagline-split{color:#0a0a0a;}
 html[data-theme="night"] .tagline-split{color:#fff;}
 
 @media (max-width:768px){
+  #sig-left,#sig-right{flex:1 1 100%;width:100%;min-width:0}
+  #sig-left{border-right:0;border-bottom:1.5px solid #0a0a0a}
+  #sig-right{max-height:none;overflow:visible}
+  #sig-canvas-wrap{height:190px}
   .tagline-wrap{margin-top:12vh;}
   .tagline-wrap h1{font-size: clamp(42px, 13vw, 78px);}
   .home-pulse-content>h2{font-size:clamp(36px,10vw,58px)}
