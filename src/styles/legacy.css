@@ -77,6 +77,14 @@ footer .signoff{font:400 15px Syne,sans-serif;letter-spacing:.24em;color:#fff;ma
  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.06 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
 .wash{position:absolute;border-radius:50%;filter:blur(50px);opacity:.35;pointer-events:none}
 .sky-sketch{position:absolute;left:0;right:0;bottom:0;width:100%;height:auto;aspect-ratio:1400/340;min-height:230px;opacity:.92}
+.perspective-page{position:relative;isolation:isolate;overflow:clip;background:linear-gradient(165deg,#f7eee4 0%,#f4f0ea 25%,#edf1ed 53%,#eeece9 76%,#f4f2ee 100%)}
+.perspective-palette{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+.perspective-palette span{position:absolute;left:0;width:100%;height:38%;background-position:center;background-repeat:no-repeat;background-size:100% 100%;mix-blend-mode:multiply;opacity:.1;mask-image:linear-gradient(180deg,transparent 0%,#000 25%,#000 67%,transparent 100%)}
+.perspective-palette .palette-warm{top:-3%;background-image:url("/legacy/assets/palette-warm-terracotta.webp");opacity:.12}
+.perspective-palette .palette-blue{top:29%;background-image:url("/legacy/assets/palette-original-blue.webp");opacity:.09}
+.perspective-palette .palette-dark{top:61%;background-image:url("/legacy/assets/palette-dark-monochrome.webp");opacity:.07}
+.perspective-content{position:relative;z-index:1}
+.perspective-page .alt{background-color:transparent}
 .persp-top{display:block;max-width:1120px;padding-bottom:clamp(140px,22vw,260px)}
 .persp-eyebrow{font-size:11px;font-weight:600;letter-spacing:.17em;text-transform:uppercase;color:var(--terra)}
 .persp-top h1{max-width:900px;margin-top:14px;font-size:clamp(42px,7vw,96px)}

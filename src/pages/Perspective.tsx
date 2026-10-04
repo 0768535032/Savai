@@ -4,7 +4,13 @@ import Skyline from '../components/Skyline';
 
 export default function Perspective() {
   return (
-    <>
+    <main className="perspective-page">
+      <div className="perspective-palette" aria-hidden="true">
+        <span className="palette-warm" />
+        <span className="palette-blue" />
+        <span className="palette-dark" />
+      </div>
+      <div className="perspective-content">
       <header
         className="head plain"
         style={{
@@ -12,7 +18,7 @@ export default function Perspective() {
           overflow: 'hidden',
           minHeight: '88svh',
           paddingTop: 72,
-          background: 'linear-gradient(180deg,#f4f2ee,#efece4 70%,#f4f2ee)',
+          background: 'transparent',
         }}
       >
         <Skyline />
@@ -138,6 +144,7 @@ export default function Perspective() {
         </div>
       </section>
       <OriginateCta />
-    </>
+      </div>
+    </main>
   );
 }
