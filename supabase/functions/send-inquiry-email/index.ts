@@ -57,7 +57,7 @@ serve(async (req) => {
     }
 
     const resendApiKey = Deno.env.get('RESEND_API_KEY');
-    const senderEmail = Deno.env.get('EMAIL_FROM') ?? 'Savai Website <noreply@savai.co.ke>';
+    const senderEmail = Deno.env.get('EMAIL_FROM') ?? 'noreply@savai.co.ke';
     const recipientEmail = 'info@savai.co.ke';
 
     if (!resendApiKey) {
@@ -94,7 +94,7 @@ serve(async (req) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        from: senderEmail,
+        from: `Savai Website <${senderEmail}>`,
         to: [recipientEmail],
         reply_to: email,
         subject: `New Savai website enquiry from ${name}`,
