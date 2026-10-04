@@ -39,18 +39,46 @@ export default function Perspective() {
       </header>
       <section className="b persp-quote-section">
         <div className="wrap">
-          <blockquote className="persp-quote persp-quote-feature">
-            “The visual arrived before the voice.”
-            <cite>
-              <a
-                href="https://savaicreative.substack.com/p/voice-before-visuals"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Voice Before Visuals <span aria-hidden="true">↗</span>
-              </a>
-            </cite>
-          </blockquote>
+          <p className="persp-eyebrow">PULLED FROM THE BUNI NOTEBOOK</p>
+          <div className="zine-wall">
+            <span className="zine-margin-note" aria-hidden="true">FIELD NOTES / NAIROBI</span>
+            <blockquote className="persp-quote zine-page zine-page-one">
+              <span>“The visual arrived before the voice.”</span>
+              <cite>
+                <a
+                  href="https://savaicreative.substack.com/p/voice-before-visuals"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Voice Before Visuals <span aria-hidden="true">↗</span>
+                </a>
+              </cite>
+            </blockquote>
+            <blockquote className="persp-quote zine-page zine-page-two">
+              <span>
+                “When a brand built on one promise reaches for another, the question is never whether it can. It’s
+                whether it should.”
+              </span>
+              <cite>
+                <a href="https://savaicreative.substack.com/p/finger-lickin-brewed" target="_blank" rel="noopener noreferrer">
+                  Finger Lickin’ Brewed? <span aria-hidden="true">↗</span>
+                </a>
+              </cite>
+            </blockquote>
+            <blockquote className="persp-quote zine-page zine-page-three">
+              <span>“The logo was beautiful. Nobody inside the company ever used it.”</span>
+              <cite>
+                <a
+                  href="https://savaicreative.substack.com/p/why-most-rebrands-fail-before-they"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Why most rebrands fail before they launch <span aria-hidden="true">↗</span>
+                </a>
+              </cite>
+            </blockquote>
+            <span className="zine-stamp" aria-hidden="true">BUNI<br />NO. 01</span>
+          </div>
         </div>
       </section>
       <section className="b alt persp-manifesto">
@@ -91,33 +119,6 @@ export default function Perspective() {
               <circle cx="796" cy="34" r="5" />
             </svg>
           </div>
-        </div>
-      </section>
-      <section className="b persp-quote-section">
-        <div className="wrap persp-quote-pair">
-          <blockquote className="persp-quote">
-            <span>
-              “When a brand built on one promise reaches for another, the question is never whether it can. It’s whether
-              it should.”
-            </span>
-            <cite>
-              <a href="https://savaicreative.substack.com/p/finger-lickin-brewed" target="_blank" rel="noopener noreferrer">
-                Finger Lickin’ Brewed? <span aria-hidden="true">↗</span>
-              </a>
-            </cite>
-          </blockquote>
-          <blockquote className="persp-quote">
-            <span>“The logo was beautiful. Nobody inside the company ever used it.”</span>
-            <cite>
-              <a
-                href="https://savaicreative.substack.com/p/why-most-rebrands-fail-before-they"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Why most rebrands fail before they launch <span aria-hidden="true">↗</span>
-              </a>
-            </cite>
-          </blockquote>
         </div>
       </section>
       <section className="b alt">

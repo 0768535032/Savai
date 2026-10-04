@@ -54,20 +54,20 @@
       if(trans){
         const citySrc=document.querySelector('.hero2 .photo img')?.src || '';
         const holdHTML=`
-        <section id="hold-pulse-section" style="background:#f4f2ee; padding:90px 0 70px; position:relative; overflow:hidden; border-top:1.5px solid #0a0a0a; border-bottom:1.5px solid #0a0a0a;">
+        <section id="hold-pulse-section" class="home-pulse-section">
           <div class="wrap" style="position:relative; z-index:2;">
-            <div style="max-width:720px;">
-              <p style="font:500 12px Syne,sans-serif; letter-spacing:.24em; margin-bottom:18px;">FLATLINE CHECK</p>
-              <h2 style="font-size:clamp(32px,5vw,64px); line-height:1.05;">Your brand is a heartbeat,<br><em style="font-family:Instrument Serif,serif; font-style:italic; color:#c0563a;">And currently its flatlining</em></h2>
-              <div style="margin:32px 0 0; max-width:640px; background:#fff; border:1.5px solid #0a0a0a; border-radius:12px; padding:18px 20px;">
-                <div style="display:flex; justify-content:space-between; margin-bottom:12px;">
-                  <span style="font:500 11px Poppins,sans-serif; letter-spacing:.15em;">CARDIOGRAM • HOLD TO REMEMBER</span>
+            <div class="home-pulse-content">
+              <p class="home-kicker">FLATLINE CHECK / 01</p>
+              <h2>Your brand is a heartbeat,<br><em>and currently it’s flatlining.</em></h2>
+              <div class="home-pulse-card">
+                <div class="home-pulse-meta">
+                  <span>CARDIOGRAM • HOLD TO REMEMBER</span>
                   <span id="bpm" style="font:700 12px Syne,sans-serif; color:#c0563a;">0 BPM</span>
                 </div>
-                <div id="pulse-container" style="background:#faf8f5; border-radius:8px; padding:10px 0;">${pulseSVG}</div>
-                <div style="margin-top:16px; display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
-                  <button id="hold-btn" style="background:#0a0a0a; color:#fff; border:0; padding:14px 28px; border-radius:999px; font:500 14px Poppins,sans-serif; cursor:pointer;">HOLD TO REMEMBER →</button>
-                  <span id="hold-hint" style="font:400 13px Poppins; color:#5a5a5a;">Press and hold to resuscitate</span>
+                <div id="pulse-container" class="home-pulse-graph">${pulseSVG}</div>
+                <div class="home-pulse-actions">
+                  <button id="hold-btn">HOLD TO REMEMBER →</button>
+                  <span id="hold-hint">Press and hold to resuscitate</span>
                 </div>
               </div>
             </div>
