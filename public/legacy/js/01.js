@@ -124,7 +124,7 @@ perspective:()=>`<header class="head plain" style="position:relative;overflow:hi
 </div></div></section>
 <section class="b alt"><div class="wrap"><h2 class="narrow">Check out BUNI.</h2><p class="narrow" style="margin-top:14px;color:var(--mut)">Newsletters and articles from Savai — on positioning, category and voice.</p>
 <div class="grid" style="margin-top:36px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))">
-<div class="card"><h3 style="font-size:17px">The BUNI newsletter</h3><p>Short, regular notes on brand and category, sent when we have something worth saying.</p><a class="btn ghost" href="#/studio/contact" style="margin-top:14px;display:inline-block">Get the next issue →</a></div>
+<div class="card"><h3 style="font-size:17px">The BUNI newsletter</h3><p>Short, regular notes on brand and category, sent when we have something worth saying.</p><a class="btn ghost" href="https://savaicreative.substack.com/" target="_blank" rel="noopener noreferrer" style="margin-top:14px;display:inline-block">Read Buni →</a></div>
 <div class="card"><h3 style="font-size:17px">Articles</h3><p>Longer pieces on positioning, voice and the work of building a challenger brand.</p><p class="note" style="margin-top:10px">Coming soon.</p></div>
 </div></div></section>${plainCta()}`,
 

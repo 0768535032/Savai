@@ -60,9 +60,15 @@ export default function Perspective() {
             <div className="card">
               <h3 style={{ fontSize: 17 }}>The BUNI newsletter</h3>
               <p>Short, regular notes on brand and category, sent when we have something worth saying.</p>
-              <Link className="btn ghost" to="/studio/contact" style={{ marginTop: 14, display: 'inline-block' }}>
-                Get the next issue →
-              </Link>
+              <a
+                className="btn ghost"
+                href="https://savaicreative.substack.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ marginTop: 14, display: 'inline-block' }}
+              >
+                Read Buni →
+              </a>
             </div>
             <div className="card">
               <h3 style={{ fontSize: 17 }}>Articles</h3>
