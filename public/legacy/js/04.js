@@ -34,6 +34,50 @@
                 <g class="city-windows" fill="#d8d2c8">
                   <path d="M135 235h8v12h-8zm18 0h8v12h-8zm-18 23h8v12h-8zm18 0h8v12h-8zm230-58h10v14h-10zm22 0h10v14h-10zm-22 28h10v14h-10zm22 0h10v14h-10zm-22 28h10v14h-10zm22 0h10v14h-10zm205-22h9v13h-9zm19 0h9v13h-9zm-19 26h9v13h-9zm19 0h9v13h-9zm240-61h10v14h-10zm21 0h10v14h-10zm-21 29h10v14h-10zm21 0h10v14h-10zm245 35h10v14h-10zm20 0h10v14h-10zm250-51h9v13h-9zm20 0h9v13h-9z"/>
                 </g>
+                <g class="city-details" fill="none" stroke="#272a29" stroke-linecap="round">
+                  <path d="M46 239v-15h22v15m382-61v-17h28v17m424 25v-19h26v19m402 17v-14h30v14" stroke-width="4"/>
+                  <path d="M0 278c90-22 140 17 225-3s142 11 220-7 155 16 240-5 152 15 238-5 160 14 240-6 153 13 237-5 140 3 200-8" stroke-width="2" opacity=".58"/>
+                </g>
+                <g class="city-practical-lights">
+                  <g>
+                    <path d="M28 294h67v39H28z" fill="#b95f43"/>
+                    <path d="M24 291h75v8H24z" fill="#e5a64b"/>
+                    <path d="M36 305h21v20H36zm31 0h23v28H67z" fill="#ffd16e"/>
+                    <path d="M39 308h15v14H39zm34 0h17v21H73z" fill="#63a7aa"/>
+                    <path d="M104 303h66v30h-66z" fill="#426f7d"/>
+                    <path d="M109 308h20v17h-20zm29 0h26v17h-26z" fill="#e4a05d"/>
+                    <rect class="city-flicker city-light-amber" x="31" y="280" width="61" height="9" rx="2" fill="#e7ad43"/>
+                    <path d="M36 282h50" stroke="#51382e" stroke-width="2" stroke-dasharray="3 4"/>
+                  </g>
+                  <g>
+                    <path d="M292 301h60v32h-60z" fill="#bd6549"/>
+                    <path d="M298 307h18v18h-18zm27 0h19v18h-19z" fill="#ffd47f"/>
+                    <rect class="city-flicker city-light-coral" x="297" y="289" width="49" height="8" rx="2" fill="#dc7c53"/>
+                    <path d="M307 291h29" stroke="#fff0d2" stroke-width="2" stroke-dasharray="5 3"/>
+                  </g>
+                  <g fill="none" stroke="#30312e" stroke-width="4">
+                    <path d="M510 294v84m-9-84h18"/>
+                    <path d="M1112 278v103m-10-103h20"/>
+                  </g>
+                  <g class="city-lamp-glow">
+                    <circle class="city-flicker city-light-amber" cx="510" cy="292" r="21" fill="#f5bd59" opacity=".62"/>
+                    <circle cx="510" cy="292" r="6" fill="#fff0bd"/>
+                    <circle class="city-flicker city-light-blue" cx="1112" cy="276" r="22" fill="#69b6ca" opacity=".58"/>
+                    <circle cx="1112" cy="276" r="6" fill="#d5fff3"/>
+                  </g>
+                  <g class="city-matatu">
+                    <path d="M684 452h124l-9-36q-3-10-14-10h-85q-9 0-12 10z" fill="#397f91"/>
+                    <path d="M698 413h31v24h-36zm39 0h33q8 0 11 8l4 16h-48z" fill="#e8c77c"/>
+                    <path d="M687 439h116v9H687z" fill="#dc6849"/>
+                    <path d="M706 449a11 11 0 1 0 22 0m48 0a11 11 0 1 0 22 0" fill="#282825" stroke="#282825" stroke-width="5"/>
+                    <circle class="city-flicker city-light-amber" cx="685" cy="437" r="4" fill="#ffe5a2"/>
+                    <circle class="city-flicker city-light-coral" cx="805" cy="437" r="4" fill="#ffc46e"/>
+                  </g>
+                  <g class="city-flicker city-light-blue" fill="#75c5ce">
+                    <rect x="905" y="301" width="35" height="6" rx="3"/>
+                    <rect x="1238" y="267" width="28" height="6" rx="3"/>
+                  </g>
+                </g>
                 <path d="M0 333H1600" stroke="#292927" stroke-width="5"/>
                 <path d="M0 507H1600" stroke="#ded8ce" stroke-width="5"/>
                 <g class="city-people">
