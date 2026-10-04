@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { supabase } from './lib/supabase';
 
 const scriptPaths = Array.from({ length: 8 }, (_, index) => `/legacy/js/${String(index + 1).padStart(2, '0')}.js`);
 
@@ -7,6 +8,64 @@ export default function LegacySite() {
 
   useEffect(() => {
     let cancelled = false;
+
+    const onContactSubmit = async (event: SubmitEvent) => {
+      const form = event.target;
+      if (!(form instanceof HTMLFormElement) || form.id !== 'contact-form') return;
+
+      event.preventDefault();
+      const button = form.querySelector<HTMLButtonElement>('#send');
+      const status = form.querySelector<HTMLParagraphElement>('#ok');
+      const setStatus = (message: string, className: 'ok' | 'err') => {
+        if (status) {
+          status.className = className;
+          status.textContent = message;
+        }
+      };
+
+      if (!supabase) {
+        setStatus('The enquiry service is not configured. Please email info@savai.co.ke directly.', 'err');
+        return;
+      }
+
+      const formData = new FormData(form);
+      const payload = {
+        name: String(formData.get('name') ?? '').trim(),
+        email: String(formData.get('email') ?? '').trim(),
+        message: String(formData.get('message') ?? '').trim(),
+        service: 'Website enquiry',
+      };
+
+      if (!payload.name || !payload.email || !payload.message) {
+        setStatus('Please complete your name, email, and message.', 'err');
+        return;
+      }
+
+      if (button) {
+        button.disabled = true;
+        button.textContent = 'Sending…';
+      }
+      setStatus('Sending your enquiry…', 'ok');
+
+      try {
+        const { data, error } = await supabase.functions.invoke('send-inquiry-email', { body: payload });
+        if (error) throw error;
+        if (data?.success !== true) throw new Error('The enquiry email was not accepted.');
+
+        form.reset();
+        setStatus('Thanks. Your enquiry has been sent. We’ll be in touch within 3 working days.', 'ok');
+      } catch (error) {
+        console.error('Unable to send website enquiry.', error);
+        setStatus('We couldn’t send your enquiry. Please try again or email info@savai.co.ke directly.', 'err');
+      } finally {
+        if (button) {
+          button.disabled = false;
+          button.textContent = 'Start the conversation →';
+        }
+      }
+    };
+
+    document.addEventListener('submit', onContactSubmit, true);
 
     const loadScript = (src: string) =>
       new Promise<void>((resolve, reject) => {
@@ -37,6 +96,7 @@ export default function LegacySite() {
     void start();
     return () => {
       cancelled = true;
+      document.removeEventListener('submit', onContactSubmit, true);
     };
   }, []);
 
