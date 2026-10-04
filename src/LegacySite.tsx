@@ -53,7 +53,7 @@ export default function LegacySite() {
         if (data?.success !== true) throw new Error('The enquiry email was not accepted.');
 
         form.reset();
-        setStatus('Thanks. Your enquiry has been sent. We’ll be in touch within 3 working days.', 'ok');
+        setStatus('Thanks. Your enquiry has been sent. We’ll be in touch.', 'ok');
       } catch (error) {
         console.error('Unable to send website enquiry.', error);
         setStatus('We couldn’t send your enquiry. Please try again or email info@savai.co.ke directly.', 'err');

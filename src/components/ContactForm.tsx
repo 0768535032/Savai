@@ -37,7 +37,7 @@ export default function ContactForm() {
 
   return (
     <form className="formcard" onSubmit={onSubmit}>
-      <p className="lead">Tell us about your brand and we'll reply within 3 working days.</p>
+      <p className="lead">Tell us about your brand and we'll reply ASAP.</p>
       <label htmlFor="n">Name</label>
       <input id="n" name="name" autoComplete="name" required />
       <label htmlFor="e">Email</label>
@@ -47,7 +47,7 @@ export default function ContactForm() {
       <button className="btn" type="submit" disabled={status === 'sending'}>
         {status === 'sending' ? 'Sending…' : 'Start the conversation →'}
       </button>
-      {status === 'sent' && <p className="ok" role="status">Thanks. We’ll be in touch within 3 working days.</p>}
+      {status === 'sent' && <p className="ok" role="status">Thanks. Your enquiry has been sent. We’ll be in touch.</p>}
       {status === 'error' && <p className="err" role="status">Something went wrong. Please try again.</p>}
     </form>
   );
