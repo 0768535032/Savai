@@ -70,13 +70,6 @@ export default function Perspective() {
                 Read Buni →
               </a>
             </div>
-            <div className="card">
-              <h3 style={{ fontSize: 17 }}>Articles</h3>
-              <p>Longer pieces on positioning, voice and the work of building a challenger brand.</p>
-              <p className="note" style={{ marginTop: 10 }}>
-                Coming soon.
-              </p>
-            </div>
           </div>
         </div>
       </section>
