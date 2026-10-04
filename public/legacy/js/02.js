@@ -112,8 +112,8 @@
     }
 
     // --- NOTEBOOKS OPEN: SIGNATURE WALL ---
-    const studioHeader=document.querySelector('header.nbhead'); // studio page header
-    if(studioHeader && studioHeader.innerHTML.includes('We keep the notebook open') && !document.getElementById('signature-wall')){
+    const studioSection=document.querySelector('.studio-sec');
+    if(studioSection && !document.getElementById('signature-wall')){
       const sigHTML=`
       <section id="signature-wall" style="background:#fcfbf8; padding:60px 0 80px; border-top:1.5px solid #0a0a0a; position:relative;">
         <div class="wrap">
@@ -134,7 +134,10 @@
           <p style="margin-top:12px; font:400 12px Poppins; color:#888;">Signatures are saved locally — refresh to see the wall grow. (No data leaves your browser)</p>
         </div>
       </section>`;
-      studioHeader.insertAdjacentHTML('afterend', sigHTML);
+      studioSection.insertAdjacentHTML('afterend', sigHTML);
+      if(location.hash==="#/studio/contact"){
+        setTimeout(()=>document.getElementById('contact')?.scrollIntoView(), 1100);
+      }
 
       const canvas=document.getElementById('sig-canvas');
       const ctx=canvas.getContext('2d');
