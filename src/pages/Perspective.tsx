@@ -1,8 +1,6 @@
-import { Link } from 'react-router-dom';
 import OriginateCta from '../components/OriginateCta';
 import PulseLine from '../components/PulseLine';
 import Skyline from '../components/Skyline';
-import { images } from '../content';
 
 export default function Perspective() {
   return (
@@ -26,28 +24,50 @@ export default function Perspective() {
         </div>
       </header>
       <section className="b">
-        <div className="wrap">
-          <div className="grid" style={{ gridTemplateColumns: 'repeat(auto-fit,minmax(300px,1fr))' }}>
-            <div>
-              <div className="ph tall" style={{ minHeight: 380 }}>
-                <img src={images.notebook} alt="An open notebook and pencil, ready for field notes" />
-              </div>
-              <div style={{ marginTop: 16 }} className="note">
-                Nicheness over noise. Good products don't guarantee good positions. Start with what you should mean, not
-                how you should look.
-              </div>
-            </div>
-            <div>
-              <h3>Notes from the studio</h3>
-              <p style={{ marginTop: 10, color: 'var(--mut)' }}>
-                Short, working thoughts on positioning, category and voice — the kind we'd scribble in the notebook
-                before they become a brief.
-              </p>
-              <Link className="btn ghost" to="/studio/contact" style={{ marginTop: 20 }}>
-                Talk to us about yours →
-              </Link>
-            </div>
-          </div>
+        <div className="wrap" style={{ display: 'grid', gap: 48, paddingTop: 34, paddingBottom: 34 }}>
+          <blockquote style={{ maxWidth: 680, margin: '0 0 0 auto', fontSize: 'clamp(24px,4vw,42px)', lineHeight: 1.2 }}>
+            “The visual arrived before the voice.”
+            <cite className="note" style={{ display: 'block', fontSize: 14, fontStyle: 'normal' }}>
+              <a href="https://savaicreative.substack.com/p/voice-before-visuals" target="_blank" rel="noopener noreferrer">
+                Voice Before Visuals →
+              </a>
+            </cite>
+          </blockquote>
+          <blockquote
+            style={{
+              maxWidth: 560,
+              margin: '0 0 0 min(10%,80px)',
+              fontSize: 'clamp(20px,3vw,32px)',
+              lineHeight: 1.3,
+            }}
+          >
+            “When a brand built on one promise reaches for another, the question is never whether it can. It’s whether it
+            should.”
+            <cite className="note" style={{ display: 'block', fontSize: 14, fontStyle: 'normal' }}>
+              <a href="https://savaicreative.substack.com/p/finger-lickin-brewed" target="_blank" rel="noopener noreferrer">
+                Finger Lickin’ Brewed? →
+              </a>
+            </cite>
+          </blockquote>
+          <blockquote
+            style={{
+              maxWidth: 640,
+              margin: '0 auto 0 12%',
+              fontSize: 'clamp(22px,3.5vw,36px)',
+              lineHeight: 1.25,
+            }}
+          >
+            “The logo was beautiful. Nobody inside the company ever used it.”
+            <cite className="note" style={{ display: 'block', fontSize: 14, fontStyle: 'normal' }}>
+              <a
+                href="https://savaicreative.substack.com/p/why-most-rebrands-fail-before-they"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Why most rebrands fail before they launch →
+              </a>
+            </cite>
+          </blockquote>
         </div>
       </section>
       <section className="b alt">
