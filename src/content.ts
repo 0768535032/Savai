@@ -118,7 +118,7 @@ export const images = {
   milkyway: 'https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?auto=format&fit=crop&w=2000&q=80',
   shore: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=2000&q=80',
   notebook: 'https://images.unsplash.com/photo-1517842645767-c639042777db?auto=format&fit=crop&w=1600&q=80',
-  student: '/legacy/assets/create-diverse.webp',
+  student: '/legacy/assets/create-collaboration.png',
   studioDesk: 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=2000&q=80',
   armchair: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=2000&q=80',
   smoke: 'https://images.unsplash.com/photo-1502082553048-f009c37129c2?auto=format&fit=crop&w=2000&q=80',

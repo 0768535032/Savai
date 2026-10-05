@@ -7,7 +7,7 @@ export default function Create() {
     <>
       <PageHead
         src={images.student}
-        alt="A diverse group of people painting a colorful shared canvas together"
+        alt="A diverse group of people collaborating over a colorful shared canvas"
         title="Let’s create."
         subtitle="Three ways to work with us. Start where your brand is today. Most brands move through all three, in whatever order they need."
         minHeight="clamp(500px, 68svh, 760px)"
