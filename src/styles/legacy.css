@@ -719,3 +719,25 @@ html[data-theme="night"] .tagline-split{color:#fff;}
    animation:editorial-rise both;animation-timeline:view();animation-range:entry 0% entry 42%
  }
 }
+html[data-theme="night"] #app .perspective-page .zine-wall{
+  background-color:#151515 !important;
+  background-image:none !important;
+}
+html[data-theme="night"] #app .perspective-page .zine-wall .persp-quote.zine-page{
+  background-color:#fcf7e9 !important;
+  background-image:linear-gradient(90deg,transparent 0 25px,#c0563a30 25px 27px,transparent 27px),repeating-linear-gradient(180deg,transparent 0 27px,#17120e13 27px 28px) !important;
+  border-color:#17120e55 !important;
+  color:#29231d !important;
+}
+html[data-theme="night"] #app .perspective-page .zine-wall .persp-quote.zine-page>span,
+html[data-theme="night"] #app .perspective-page .zine-wall .persp-quote.zine-page cite,
+html[data-theme="night"] #app .perspective-page .zine-wall .persp-quote.zine-page cite a{
+  color:#29231d !important;
+}
+html[data-theme="night"] #app .perspective-page .zine-wall .persp-quote.zine-page cite a:hover{
+  color:#9a422f !important;
+}
+html[data-theme="night"] #app .perspective-page .zine-wall .zine-margin-note,
+html[data-theme="night"] #app .perspective-page .zine-wall .zine-stamp{
+  color:#fff9e8 !important;
+}
