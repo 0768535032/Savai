@@ -4,11 +4,12 @@ type Props = {
   title: string;
   subtitle?: string;
   minHeight?: string;
+  className?: string;
 };
 
-export default function PageHead({ src, alt, title, subtitle, minHeight }: Props) {
+export default function PageHead({ src, alt, title, subtitle, minHeight, className }: Props) {
   return (
-    <header className="nbhead" style={minHeight ? { minHeight } : undefined}>
+    <header className={`nbhead${className ? ` ${className}` : ''}`} style={minHeight ? { minHeight } : undefined}>
       <img src={src} alt={alt} />
       <div className="wrap txt">
         <h1 style={{ fontSize: 'clamp(32px,5vw,56px)' }}>{title}</h1>

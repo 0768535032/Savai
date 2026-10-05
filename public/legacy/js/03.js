@@ -2,6 +2,31 @@
   let activeStudioSec=null;
   let cursor=null;
   let listeners=null;
+  let activeTier=null;
+  let tierGlowReady=false;
+
+  function setupTierGlow(){
+    if(tierGlowReady) return;
+    tierGlowReady=true;
+    document.addEventListener('pointermove',event=>{
+      const tier=event.target instanceof Element ? event.target.closest('.tier') : null;
+      if(event.pointerType==='touch'||!tier){
+        if(activeTier) activeTier.classList.remove('is-glowing');
+        activeTier=null;
+        return;
+      }
+      const rect=tier.getBoundingClientRect();
+      tier.style.setProperty('--pointer-x',`${event.clientX-rect.left}px`);
+      tier.style.setProperty('--pointer-y',`${event.clientY-rect.top}px`);
+      tier.classList.add('is-glowing');
+      if(activeTier&&activeTier!==tier) activeTier.classList.remove('is-glowing');
+      activeTier=tier;
+    },{passive:true});
+    window.addEventListener('pointerleave',()=>{
+      if(activeTier) activeTier.classList.remove('is-glowing');
+      activeTier=null;
+    });
+  }
 
   function cleanupSplatter(){
     if(activeStudioSec && listeners){
@@ -109,7 +134,8 @@
     });
   }
 
-  const restoreEffects=()=>{restoreSplatter();restoreSea();};
+  const restoreEffects=()=>{restoreSplatter();restoreSea();setupTierGlow();};
+  setupTierGlow();
   setTimeout(restoreEffects,900);
   window.addEventListener('hashchange',()=>setTimeout(restoreEffects,800));
 })();
