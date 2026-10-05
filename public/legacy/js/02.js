@@ -13,38 +13,20 @@
       if(img && !document.getElementById('blur-img-full')){
         const blurImg=img.cloneNode(true);
         blurImg.id='blur-img-full';
-        blurImg.style.cssText='position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 30%;filter:blur(18px) brightness(1.1) saturate(1.3);clip-path:inset(0 0 0 52%);z-index:1;pointer-events:auto;';
+        blurImg.style.cssText='position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 30%;filter:blur(18px) brightness(1.1) saturate(1.3);clip-path:inset(0 0 0 52%);z-index:1;pointer-events:none;';
         photo.appendChild(blurImg);
         let handle=document.getElementById('focus-handle');
         if(!handle){
           handle=document.createElement('div');
           handle.id='focus-handle';
-          handle.style.cssText='position:absolute;top:0;bottom:0;width:4px;background:rgba(255,255,255,0.9);left:52%;z-index:5;cursor:ew-resize;box-shadow:0 0 12px rgba(255,255,255,.8);';
+          handle.style.cssText='position:absolute;top:0;bottom:0;width:88px;margin-left:-44px;background:transparent;left:52%;z-index:5;cursor:ew-resize;touch-action:none;';
           const label=document.createElement('span');
           label.textContent='';
-          label.style.cssText='position:absolute;top:50%;left:16px;transform:translateY(-50%);background:rgba(10,10,10,0.85);color:#fff;padding:10px 14px;font:500 10px Syne,sans-serif;letter-spacing:.2em;white-space:nowrap;border-radius:999px;border:1px solid #fff;pointer-events:auto;';
+          label.style.cssText='position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(10,10,10,0.85);color:#fff;padding:10px 14px;font:500 10px Syne,sans-serif;letter-spacing:.2em;white-space:nowrap;border-radius:999px;border:1px solid #fff;pointer-events:none;';
           handle.appendChild(label);
           photo.appendChild(handle);
         }
-        let dragging=false;
-        const update=(x)=>{
-          const rect=photo.getBoundingClientRect();
-          let pct=((x-rect.left)/rect.width)*100;
-          pct=Math.max(2,Math.min(98,pct));
-          handle.style.left=pct+'%';
-          blurImg.style.clipPath=`inset(0 0 0 ${pct}%)`;
-          img.style.clipPath=`inset(0 ${100-pct}% 0 0)`;
-          img.style.filter='blur(0px) brightness(0.85)';
-        };
-        // fix: make photo handle events
-        photo.style.touchAction='none';
-        handle.addEventListener('pointerdown',(e)=>{ dragging=true; handle.setPointerCapture(e.pointerId); e.preventDefault(); });
-        window.addEventListener('pointerup',()=>{ dragging=false; });
-        window.addEventListener('pointermove',(e)=>{ if(dragging) update(e.clientX); });
-        photo.addEventListener('pointerdown',(e)=>{ if(e.target===photo || e.target===img || e.target===blurImg){ dragging=true; update(e.clientX); }});
-        // initial
-        const r=photo.getBoundingClientRect();
-        update(r.left + r.width*0.52);
+        img.style.pointerEvents='none';
       }
     }
 

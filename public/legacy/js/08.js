@@ -7,6 +7,8 @@
     const handle=document.getElementById('focus-handle');
     const photo=document.querySelector('.hero2 .photo');
     if(!wrap||!orange||!split||!handle||!photo) return;
+    if(photo.dataset.taglineReady) return;
+    photo.dataset.taglineReady='true';
     
     // Palette: shifting colors as drag moves left (night) to right (light)
     // Left = night = warm orange, Right = light = cool and bright
@@ -73,9 +75,16 @@
       updateTaglineColor(handleCenter, handlePct);
     }
     
-    setInterval(checkHandle, 16);
-    window.addEventListener('pointermove', checkHandle);
-    window.addEventListener('resize', checkHandle);
+    const interval=setInterval(()=>{
+      if(!photo.isConnected){
+        clearInterval(interval);
+        window.removeEventListener('resize',onResize);
+        return;
+      }
+      checkHandle();
+    },16);
+    const onResize=()=>{ if(photo.isConnected) checkHandle(); };
+    window.addEventListener('resize', onResize);
     setTimeout(checkHandle, 600);
   }
   

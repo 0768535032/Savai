@@ -144,7 +144,7 @@ export default function Perspective() {
           </div>
         </div>
       </section>
-      <OriginateCta />
+      <OriginateCta to="/studio" />
       </div>
     </main>
   );

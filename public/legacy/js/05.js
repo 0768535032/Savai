@@ -1,12 +1,10 @@
 
 (function(){
-  let currentTheme='night';
+  let currentTheme=null;
   const root=document.documentElement;
   
   function applyTheme(pct, force){
-    // NEW MAPPING: left = NIGHT, right = LIGHT (per user request)
-    // pct 0% (far left) = 100% night, pct 100% (far right) = 100% light
-    let newTheme = pct < 50 ? 'night' : 'light';
+    const newTheme = pct < 50 ? 'night' : 'light';
     let changed = newTheme!==currentTheme || force;
     
     if(changed){
@@ -22,10 +20,10 @@
         const label=ind.querySelector('.label');
         const dot=ind.querySelector('.dot');
         if(newTheme==='night'){
-          label.textContent='NIGHT MODE ACTIVATED';
-          dot.style.background='#c0563a';
-          dot.style.boxShadow='0 0 14px #c0563a';
-          ind.style.borderColor='#c0563a';
+          label.textContent='DARK MODE ACTIVATED';
+          dot.style.background='#aaa';
+          dot.style.boxShadow='0 0 14px #aaa';
+          ind.style.borderColor='#777';
         } else {
           label.textContent='LIGHT MODE ACTIVATED';
           dot.style.background='#6fa5bd';
@@ -39,16 +37,15 @@
     const blurImg=document.getElementById('blur-img-full');
     const streak=document.getElementById('streak-overlay');
     if(sharpImg && blurImg){
-      // sharp = NIGHT (right side), blur = LIGHT (left side)
-      // pct 0 = night full, pct 100 = light full
-      sharpImg.style.clipPath=`inset(0 0 0 ${pct}%)`; // right side visible, size = 100-pct
+        // The original image is fully visible at the left extreme; the blurred layer takes over to the right.
+        sharpImg.style.clipPath=`inset(0 0 0 ${pct}%)`; // right side visible, size = 100-pct
       blurImg.style.clipPath=`inset(0 ${100-pct}% 0 0)`; // left side visible, size = pct
       if(streak) streak.style.clipPath=`inset(0 ${100-pct}% 0 0)`;
       
       if(newTheme==='night'){
-        sharpImg.style.filter='brightness(0.85) contrast(1.15) saturate(1.3)';
+        sharpImg.style.filter='grayscale(1) brightness(0.85) contrast(1.15)';
         sharpImg.style.opacity='1';
-        blurImg.style.filter='blur(18px) brightness(1.35) saturate(0.6) opacity(0.65)';
+        blurImg.style.filter='grayscale(1) blur(18px) brightness(1.35) opacity(0.65)';
       } else {
         sharpImg.style.filter='brightness(0.9) contrast(1.05) saturate(1.2) opacity(0.7)';
         blurImg.style.filter='blur(10px) brightness(1.55) saturate(0.65) contrast(0.92)';
@@ -64,7 +61,9 @@
   function setup(){
     const photo=document.querySelector('.hero2 .photo');
     const handle=document.getElementById('focus-handle');
-    if(!photo||!handle) return;
+    if(!photo||!handle||photo.dataset.dragReady) return;
+    photo.dataset.dragReady='true';
+    photo.style.touchAction='none';
 
     // LABEL = DRAG ME with dim flicker on open
     handle.innerHTML=`
@@ -76,8 +75,10 @@
     const knob=document.getElementById('drag-knob');
     
     // Flicker animation on open - intense at first, then dim
-    const style=document.createElement('style');
-    style.textContent=`
+    if(!document.getElementById('drag-knob-animations')){
+      const style=document.createElement('style');
+      style.id='drag-knob-animations';
+      style.textContent=`
       @keyframes flickerOpen{
         0%{ opacity:1; box-shadow:0 8px 24px rgba(0,0,0,0.6), 0 0 30px rgba(255,255,255,0.9); }
         8%{ opacity:0.3; box-shadow:0 8px 24px rgba(0,0,0,0.3), 0 0 5px rgba(255,255,255,0.2); }
@@ -101,8 +102,9 @@
       }
       #drag-knob.flicker-open{ animation: flickerOpen 1.8s ease-in-out 1; }
       #drag-knob.flicker-dim{ animation: dimFlickerLoop 3.5s infinite steps(2); }
-    `;
-    document.head.appendChild(style);
+      `;
+      document.head.appendChild(style);
+    }
     
     knob.classList.add('flicker-open');
     setTimeout(()=>{ knob.classList.remove('flicker-open'); knob.classList.add('flicker-dim'); }, 2000);
@@ -113,7 +115,7 @@
       ind=document.createElement('div');
       ind.id='theme-indicator';
       ind.style.cssText='position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(24px);z-index:10000;background:rgba(10,10,10,0.94);color:#fff;padding:14px 26px;border-radius:999px;font:600 11px Syne,sans-serif;letter-spacing:0.2em;display:flex;gap:14px;align-items:center;border:1.5px solid #c0563a;backdrop-filter:blur(16px);opacity:0;pointer-events:none;transition:all 0.45s cubic-bezier(0.4,0,0.2,1);';
-      ind.innerHTML=`<div class="dot" style="width:10px;height:10px;border-radius:50%;background:#c0563a;box-shadow:0 0 14px #c0563a;transition:all 0.3s;"></div><span class="label">NIGHT MODE ACTIVATED</span>`;
+      ind.innerHTML=`<div class="dot" style="width:10px;height:10px;border-radius:50%;background:#c0563a;box-shadow:0 0 14px #c0563a;transition:all 0.3s;"></div><span class="label">DARK MODE ACTIVATED</span>`;
       document.body.appendChild(ind);
     }
 
@@ -132,44 +134,38 @@
     let dragging=false;
     const update=(x)=>{
       const rect=photo.getBoundingClientRect();
+      if(!rect.width) return;
       let pct=((x-rect.left)/rect.width)*100;
       pct=Math.max(0,Math.min(100,pct));
       handle.style.left=pct+'%';
       applyTheme(pct);
     };
 
-    handle.addEventListener('pointerdown',(e)=>{
+    photo.addEventListener('pointerdown',(e)=>{
       dragging=true;
-      handle.setPointerCapture(e.pointerId);
+      photo.setPointerCapture(e.pointerId);
+      update(e.clientX);
       showInd();
       e.preventDefault();
     });
-    photo.addEventListener('pointerdown',(e)=>{
-      const sharp=document.querySelector('.hero2 .photo img:not(#blur-img-full)');
-      const blur=document.getElementById('blur-img-full');
-      if(e.target===photo||e.target===sharp||e.target===blur){
-        update(e.clientX);
-        dragging=true;
-        showInd();
-      }
-    });
-    window.addEventListener('pointermove',(e)=>{
+    photo.addEventListener('pointermove',(e)=>{
       if(dragging){
         update(e.clientX);
-        // keep indicator visible while dragging
-        if(ind) ind.style.opacity='1';
+        ind.style.opacity='1';
       }
     });
-    window.addEventListener('pointerup',()=>{
+    const stopDragging=()=>{
       if(dragging){
         dragging=false;
         hideInd();
       }
-    });
+    };
+    photo.addEventListener('pointerup',stopDragging);
+    photo.addEventListener('pointercancel',stopDragging);
     handle.addEventListener('pointerenter',()=>{ if(!dragging) showInd(); });
     handle.addEventListener('pointerleave',()=>{ if(!dragging) hideInd(); });
 
-    // Initial: far left = NIGHT MODE ACTIVATED
+    // Start in dark mode and keep the mode label in sync with the same threshold used while dragging.
     requestAnimationFrame(()=>{
       const r=photo.getBoundingClientRect();
       update(r.left + r.width*0.12); // start in night

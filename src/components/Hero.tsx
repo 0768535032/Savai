@@ -69,9 +69,11 @@ export default function Hero() {
     };
     window.addEventListener('pointermove', onMove);
     window.addEventListener('pointerup', onUp);
+    window.addEventListener('pointercancel', onUp);
     return () => {
       window.removeEventListener('pointermove', onMove);
       window.removeEventListener('pointerup', onUp);
+      window.removeEventListener('pointercancel', onUp);
     };
   }, [dragging]);
 
@@ -121,12 +123,22 @@ export default function Hero() {
             Take a seat →
           </Link>
         </div>
-        <div className="photo" ref={photoRef} onPointerDown={(e) => startDrag(e.clientX)}>
+        <div
+          className="photo"
+          ref={photoRef}
+          onPointerDown={(e) => {
+            e.currentTarget.setPointerCapture(e.pointerId);
+            startDrag(e.clientX);
+          }}
+        >
           <img
             className="blur"
             src={images.hero}
             alt=""
-            style={{ clipPath: `inset(0 ${100 - pct}% 0 0)` }}
+            style={{
+              clipPath: `inset(0 ${100 - pct}% 0 0)`,
+              filter: theme === 'night' ? 'grayscale(1) blur(14px) brightness(1.4)' : undefined,
+            }}
           />
           <img
             src={images.hero}
@@ -135,7 +147,7 @@ export default function Hero() {
               clipPath: `inset(0 0 0 ${pct}%)`,
               filter:
                 theme === 'night'
-                  ? 'brightness(0.85) contrast(1.15) saturate(1.3)'
+                  ? 'grayscale(1) brightness(0.85) contrast(1.15)'
                   : 'brightness(0.9) contrast(1.05) saturate(1.2) opacity(0.7)',
             }}
           />
@@ -158,7 +170,7 @@ export default function Hero() {
       </header>
       <div id="theme-indicator" className={showInd ? 'is-on' : undefined}>
         <div className="dot" />
-        <span className="label">{theme === 'night' ? 'NIGHT MODE ACTIVATED' : 'LIGHT MODE ACTIVATED'}</span>
+        <span className="label">{theme === 'night' ? 'DARK MODE ACTIVATED' : 'LIGHT MODE ACTIVATED'}</span>
       </div>
     </>
   );
