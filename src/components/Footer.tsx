@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { images } from '../content';
-import Logo from './Logo';
+import { BrandLink } from './Logo';
 
 export default function Footer() {
   return (
@@ -9,7 +9,7 @@ export default function Footer() {
         <img src={images.smoke} alt="" />
       </div>
       <div className="wrap">
-        <Logo />
+        <BrandLink />
         <p className="signoff">ORIGINATE</p>
         <p>
           <Link to="/work">Work</Link> · <Link to="/approach">Approach</Link> ·{' '}
