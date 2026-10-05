@@ -136,7 +136,7 @@
       </section>`;
       studioSection.insertAdjacentHTML('afterend', sigHTML);
       if(location.hash==="#/studio/contact"){
-        setTimeout(()=>document.getElementById('contact')?.scrollIntoView(), 1100);
+        setTimeout(()=>document.getElementById('contact-form')?.scrollIntoView({block:'end'}), 1100);
       }
 
       const canvas=document.getElementById('sig-canvas');

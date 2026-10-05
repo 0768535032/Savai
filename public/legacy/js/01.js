@@ -9,7 +9,7 @@ const IMAGES={case1:U.arch_model,case2:U.neoclass,case3:U.abstract3d,studio1:U.b
 const pages=[["work","Work"],["approach","Approach"],["perspective","Perspective"],["create","Let’s create"],["studio","Studio"]];
 const nav=(r,solid)=>`<nav class="${solid?'solid':''}"><a class="brand" href="#/" aria-label="Savai home">${LOGO}<span>Savai<i>.</i></span></a><ul>${pages.map(([h,t])=>`<li><a href="#/${h}" class="${r===h?"on":""}">${t}</a></li>`).join("")}</ul></nav>`;
 const foot=()=>`<footer><div class="fbg"><img src="${U.smoke}" alt=""></div><div class="wrap"><div class="brand">${LOGO}<span>Savai<i>.</i></span></div><p class="signoff">ORIGINATE</p><p><a href="#/work">Work</a> · <a href="#/approach">Approach</a> · <a href="#/perspective">Perspective</a> · <a href="#/create">Let’s create</a> · <a href="#/studio">Studio</a> · <a href="#/studio/contact">Say hello</a></p><p style="margin-top:14px">www.savai.co.ke · Nairobi</p></div></footer>`;
-const plainCta=()=>`<section class="dark b"><div class="wrap"><h2 class="narrow">The market already has a favourite.</h2><h2 class="narrow" style="margin:10px 0 32px">What will you give it to remember?</h2><a class="btn" href="#/studio/contact" style="background:#fff;color:#0a0a0a">Originate →</a></div></section>`;
+const plainCta=()=>`<section class="dark b origin-cta"><div class="wrap origin-cta-inner"><div class="origin-cta-copy"><p class="origin-cta-kicker">SAVAI CREATIVE <span>·</span> NAIROBI</p><h2>The market already has a favourite.</h2><p class="origin-cta-prompt">Change the narrative</p><p class="origin-cta-note">A clear position changes what people notice, remember and choose.</p><a class="btn origin-cta-button" href="#/studio/contact">Start a conversation <span aria-hidden="true">→</span></a></div><div class="origin-cta-mark" aria-hidden="true">S</div></div></section>`;
 
 /* ---- original artwork (drawn in code, not photographic, not AI-generated) ---- */
 const wash=(x,y,w,h,c)=>`<div class="wash" style="left:${x};top:${y};width:${w};height:${h};background:${c}"></div>`;
@@ -111,7 +111,7 @@ const V={
 <section class="b home-offer"><div class="wrap"><p class="home-kicker">A CLEAR WAY IN</p><h2 class="narrow">Three ways to work with us.</h2><p class="narrow" style="margin:16px 0 30px">Each has a defined scope, a clear list of what you get, and a fixed price. Start where your brand is today.</p><a class="btn" href="#/create">See pricing →</a><span class="home-offer-mark" aria-hidden="true">START<br>HERE ↘</span></div></section>${plainCta()}</main>`,
 
 work:()=>`<header class="nbhead" style="min-height:78svh"><img src="${U.milkyway}" alt="A lone tree under the Milky Way" style="width:100%;height:100%;left:0;top:0;object-position:center 38%"><div class="wrap txt" style="padding-bottom:34px"><h1 style="font-size:clamp(32px,5vw,56px);text-shadow:0 2px 18px rgba(0,0,0,.6)">Work</h1><p style="text-shadow:0 2px 12px rgba(0,0,0,.7)">Proof that a clear position changes the outcome.</p></div></header>
-<section class="b"><div class="wrap" style="text-align:center;padding:60px 0"><h2>Coming soon.</h2><p class="narrow" style="margin:16px auto 0">We’re only just getting started — case studies will land here as soon as the work does.</p></div></section>${plainCta()}`,
+<section class="b work-note"><div class="wrap work-note-inner"><p class="home-kicker">FROM THE STUDIO</p><h2>Good work deserves a clear point of view.</h2><p class="work-note-copy">We’re preparing a considered selection of our work. In the meantime, explore the thinking behind it or tell us what you’re building.</p><div class="work-note-actions"><a class="btn ghost" href="#/approach">Explore our approach →</a><a class="text-link" href="#/studio/contact">Talk about your brand <span aria-hidden="true">→</span></a></div></div></section>${plainCta()}`,
 
 approach:()=>`<header class="nbhead"><img src="${U.shore}" alt="Sunlit water meeting a rocky shore"><div class="wrap txt" style="color:#fff"><h1>Approach</h1><p>Find, position, express, activate.</p></div></header>
 <section class="alt b"><div class="wrap"><div class="grid">${steps.map((s,i)=>`<div class="card"><h3>${i+1}. ${s[0]}</h3><p>${s[1]}</p></div>`).join("")}</div></div></section>
@@ -127,11 +127,6 @@ perspective:()=>`<main class="perspective-page"><div class="perspective-palette"
 
 create:()=>`<header class="nbhead" style="min-height:48svh"><img src="${U.student}" alt="A client, thrilled to get their brand moving"><div class="wrap txt"><h1 style="font-size:clamp(32px,5vw,56px)">Let’s create.</h1><p class="narrow">Three ways to work with us. Each has a defined scope, a clear list of what you get, and a fixed price. Start where your brand is today. Most brands move through all three, in whatever order they need.</p></div></header>
 <section class="b"><div class="wrap"><div class="tiers">${TIERS.map(tierCard).join("")}</div>
-<h3 style="margin-top:56px">Full detail, tier by tier</h3><div class="acc">${TIERS.map(tierAcc).join("")}</div>
-<h3 style="margin-top:56px">Terms of engagement</h3><p class="note" style="margin-top:6px">These apply across all three tiers unless stated otherwise.</p>
-<div class="grid" style="margin-top:20px"><div class="card"><h3 style="font-size:17px">Feedback and timelines</h3><p>Feedback is due within 3 working days of each delivery. Delays on the client side pause the project clock. One consolidated set of feedback per round keeps revisions clean and on time.</p></div>
-<div class="card"><h3 style="font-size:17px">Ownership and rights</h3><p>You own the final approved deliverables and source files once the final payment has cleared. Savai keeps unused concepts and the right to show finished work in its portfolio. Typeface licences and other third-party costs are paid by the client.</p></div>
-<div class="card"><h3 style="font-size:17px">Scope</h3><p>Anything outside the deliverables listed for a tier is scoped and quoted separately before work begins.</p></div></div>
 <p style="margin-top:40px"><a class="btn" href="#/studio/contact">Start with Bearings →</a></p>
 </div></section>`,
 
@@ -227,7 +222,7 @@ function render(){
  const solid=r!=="";
  document.getElementById("app").innerHTML=nav(r,solid)+v()+foot();
  document.title="Savai. "+(r?r[0].toUpperCase()+r.slice(1):"we know your story....");
- if(full==="studio/contact"){const c=document.getElementById("contact");c&&c.scrollIntoView()}else window.scrollTo(0,0);
+ if(full==="studio/contact"){const c=document.getElementById("contact-form");c&&c.scrollIntoView({block:"end"})}else window.scrollTo(0,0);
  document.querySelectorAll("#chips .chip").forEach(b=>b.onclick=()=>{document.querySelectorAll("#chips .chip").forEach(x=>x.setAttribute("aria-pressed",x===b));document.getElementById("panel").textContent=looks[b.dataset.k]});
  document.querySelectorAll(".acc-h").forEach(b=>b.onclick=()=>{const body=b.nextElementSibling;const open=body.style.maxHeight&&body.style.maxHeight!=="0px";document.querySelectorAll(".acc-b").forEach(x=>x.style.maxHeight="0px");body.style.maxHeight=open?"0px":body.scrollHeight+40+"px"});
 }

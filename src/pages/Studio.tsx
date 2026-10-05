@@ -9,7 +9,7 @@ export default function Studio() {
 
   useEffect(() => {
     if (pathname.endsWith('/contact')) {
-      document.getElementById('contact')?.scrollIntoView();
+      document.getElementById('contact')?.scrollIntoView({ block: 'end' });
     }
   }, [pathname]);
 

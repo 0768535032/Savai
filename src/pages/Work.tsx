@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import OriginateCta from '../components/OriginateCta';
 import PageHead from '../components/PageHead';
 import { images } from '../content';
@@ -12,12 +13,22 @@ export default function Work() {
         subtitle="Proof that a clear position changes the outcome."
         minHeight="78svh"
       />
-      <section className="b">
-        <div className="wrap" style={{ textAlign: 'center', padding: '60px 0' }}>
-          <h2>Coming soon.</h2>
-          <p className="narrow" style={{ margin: '16px auto 0' }}>
-            We’re only just getting started — case studies will land here as soon as the work does.
+      <section className="b work-note">
+        <div className="wrap work-note-inner">
+          <p className="home-kicker">FROM THE STUDIO</p>
+          <h2>Good work deserves a clear point of view.</h2>
+          <p className="work-note-copy">
+            We’re preparing a considered selection of our work. In the meantime, explore the thinking behind it or tell
+            us what you’re building.
           </p>
+          <div className="work-note-actions">
+            <Link className="btn ghost" to="/approach">
+              Explore our approach →
+            </Link>
+            <Link className="text-link" to="/studio/contact">
+              Talk about your brand <span aria-hidden="true">→</span>
+            </Link>
+          </div>
         </div>
       </section>
       <OriginateCta />

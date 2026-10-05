@@ -121,11 +121,7 @@ export default function Hero() {
             Take a seat →
           </Link>
         </div>
-        <div
-          className="photo"
-          ref={photoRef}
-          onPointerDown={(e) => startDrag(e.clientX)}
-        >
+        <div className="photo" ref={photoRef} onPointerDown={(e) => startDrag(e.clientX)}>
           <img
             className="blur"
             src={images.hero}

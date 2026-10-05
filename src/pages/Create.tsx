@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import PageHead from '../components/PageHead';
-import TierAccordion from '../components/TierAccordion';
 import { images, tiers } from '../content';
 
 export default function Create() {
@@ -43,33 +42,6 @@ export default function Create() {
                 </div>
               </div>
             ))}
-          </div>
-          <h3 style={{ marginTop: 56 }}>Full detail, tier by tier</h3>
-          <TierAccordion tiers={tiers} />
-          <h3 style={{ marginTop: 56 }}>Terms of engagement</h3>
-          <p className="note" style={{ marginTop: 6 }}>
-            These apply across all three tiers unless stated otherwise.
-          </p>
-          <div className="grid" style={{ marginTop: 20 }}>
-            <div className="card">
-              <h3 style={{ fontSize: 17 }}>Feedback and timelines</h3>
-              <p>
-                Feedback is due within 3 working days of each delivery. Delays on the client side pause the project
-                clock. One consolidated set of feedback per round keeps revisions clean and on time.
-              </p>
-            </div>
-            <div className="card">
-              <h3 style={{ fontSize: 17 }}>Ownership and rights</h3>
-              <p>
-                You own the final approved deliverables and source files once the final payment has cleared. Savai keeps
-                unused concepts and the right to show finished work in its portfolio. Typeface licences and other
-                third-party costs are paid by the client.
-              </p>
-            </div>
-            <div className="card">
-              <h3 style={{ fontSize: 17 }}>Scope</h3>
-              <p>Anything outside the deliverables listed for a tier is scoped and quoted separately before work begins.</p>
-            </div>
           </div>
           <p style={{ marginTop: 40 }}>
             <Link className="btn" to="/studio/contact">
